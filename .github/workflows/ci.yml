@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm i --frozen-lockfile --prefix functions
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions --project='eip4361-firebase-auth'
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
