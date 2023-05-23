@@ -20,6 +20,13 @@ app.post('/nonce', async (req, res) => {
 
   const nonce = generateNonce()
 
+  const user = await admin.firestore().doc(`/nonces/${address}`).get()
+  if (user.exists) {
+    return res.send({
+      nonce: user.data()?.nonce,
+    })
+  }
+
   await admin.firestore().doc(`/nonces/${address}`).set({
     nonce: nonce,
   })
