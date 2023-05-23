@@ -1,9 +1,11 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as express from 'express'
+import * as cors from 'cors'
 import { SiweMessage, generateNonce } from 'siwe'
 
 const app: express.Express = express()
+app.use(cors({ origin: true }))
 
 admin.initializeApp()
 
@@ -35,6 +37,7 @@ app.post('/nonce', async (req, res) => {
 })
 
 app.post('/verify', async (req, res) => {
+  res.set({ 'Access-Control-Allow-Origin': '*' })
   try {
     const { address, message, signature } = req.body
     const siweMessage = new SiweMessage(message)
