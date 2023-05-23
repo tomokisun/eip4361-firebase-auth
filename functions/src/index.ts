@@ -63,7 +63,7 @@ app.post('/verify', async (req, res) => {
     })
   } catch (error) {
     return res.json({
-      message: '',
+      message: error,
     })
   }
 })
