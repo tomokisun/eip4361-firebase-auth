@@ -27,6 +27,10 @@ app.post('/nonce', async (req, res) => {
     })
   }
 
+  await admin.auth().createUser({
+    uid: address,
+  })
+
   await admin.firestore().doc(`/nonces/${address}`).set({
     nonce: nonce,
   })
@@ -55,10 +59,6 @@ app.post('/verify', async (req, res) => {
 
     await userReference.set({
       nonce: generateNonce(),
-    })
-
-    await admin.auth().createUser({
-      uid: address,
     })
 
     const customToken = await admin.auth().createCustomToken(address)
