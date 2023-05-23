@@ -57,6 +57,10 @@ app.post('/verify', async (req, res) => {
       nonce: generateNonce(),
     })
 
+    await admin.auth().createUser({
+      uid: address,
+    })
+
     const customToken = await admin.auth().createCustomToken(address)
     return res.status(200).send({
       token: customToken,
