@@ -1,4 +1,4 @@
-name: CI
+name: Cloud Functions for Firebase
 
 on:
   workflow_dispatch:
